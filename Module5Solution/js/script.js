@@ -84,7 +84,7 @@ showLoading("#main-content");
 $ajaxUtils.sendGetRequest(
   allCategoriesUrl,
   buildAndShowHomeHTML, // ***** <---- TODO: STEP 1: Substitute [...] ******
-  true); // Explicitely setting the flag to get JSON from server processed into an object literal
+  true); // Explicitly setting the flag to get JSON from server processed into an object literal
 });
 // *** finish **
 
@@ -104,7 +104,6 @@ function buildAndShowHomeHTML (categories) {
       // var chosenCategoryShortName = ....
       var chosenCategoryShortName = chooseRandomCategory(categories).short_name;
 
-
       // TODO: STEP 3: Substitute {{randomCategoryShortName}} in the home html snippet with the
       // chosen category from STEP 2. Use existing insertProperty function for that purpose.
       // Look through this code for an example of how to do use the insertProperty function.
@@ -117,16 +116,16 @@ function buildAndShowHomeHTML (categories) {
       // it into the home html snippet.
       //
       // var homeHtmlToInsertIntoMainPage = ....
-      chosenCategoryShortName = "'" + chosenCategoryShortName + "'";
-      var homeHtmlToInsertIntoMainPage = insertProperty(homeHtml, "randomCategoryShortName", chosenCategoryShortName);
 
+      var catHtml=homeHtml;
+      var homeHtmlToInsertIntoMainPage = insertProperty(catHtml,"randomCategoryShortName","'"+chosenCategoryShortName+"'");
 
       // TODO: STEP 4: Insert the the produced HTML in STEP 3 into the main page
       // Use the existing insertHtml function for that purpose. Look through this code for an example
       // of how to do that.
       // ....
-      insertHtml('#main-content', homeHtmlToInsertIntoMainPage);
-
+      insertHtml("#main-content",homeHtmlToInsertIntoMainPage);
+      
     },
     false); // False here because we are getting just regular HTML from the server, so no need to process JSON.
 }
@@ -345,65 +344,3 @@ function insertItemPortionName(html,
 global.$dc = dc;
 
 })(window);
-
-    html =
-      insertItemPortionName(html,
-                            "large_portion_name",
-                            menuItems[i].large_portion_name);
-    html =
-      insertProperty(html,
-                     "name",
-                     menuItems[i].name);
-    html =
-      insertProperty(html,
-                     "description",
-                     menuItems[i].description);
-
-    // Add clearfix after every second menu item
-    if (i % 2 !== 0) {
-      html +=
-        "<div class='clearfix visible-lg-block visible-md-block'></div>";
-    }
-
-    finalHtml += html;
-  }
-
-  finalHtml += "</section>";
-  return finalHtml;
-}
-
-
-// Appends price with '$' if price exists
-function insertItemPrice(html,
-                         pricePropName,
-                         priceValue) {
-  // If not specified, replace with empty string
-  if (!priceValue) {
-    return insertProperty(html, pricePropName, "");
-  }
-
-  priceValue = "$" + priceValue.toFixed(2);
-  html = insertProperty(html, pricePropName, priceValue);
-  return html;
-}
-
-
-// Appends portion name in parens if it exists
-function insertItemPortionName(html,
-                               portionPropName,
-                               portionValue) {
-  // If not specified, return original string
-  if (!portionValue) {
-    return insertProperty(html, portionPropName, "");
-  }
-
-  portionValue = "(" + portionValue + ")";
-  html = insertProperty(html, portionPropName, portionValue);
-  return html;
-}
-
-
-global.$dc = dc;
-
-})(window);
-
